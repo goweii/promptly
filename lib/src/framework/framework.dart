@@ -3,6 +3,7 @@ library;
 import 'dart:collection';
 import 'dart:io';
 
+import 'package:characters/characters.dart';
 import 'package:dart_console/dart_console.dart' as dc;
 // ignore: implementation_imports
 import 'package:dart_console/src/ansi.dart' as ansi;
@@ -12,6 +13,7 @@ import 'package:path/path.dart' as p;
 import 'package:promptly/promptly.dart';
 import 'package:promptly/src/framework/file_logger.dart';
 import 'package:promptly/src/utils/string_buffer.dart';
+import 'dart:convert';
 
 part 'component.dart';
 part 'context.dart';
