@@ -172,7 +172,7 @@ class Context {
           // invalid UTF-8, wait for more characters
           continue;
         }
-        if (_getDisplayWidth(buffer) + _getDisplayWidth(text) <= bufferMaxLength) {
+        if (_getRenderWidth(buffer) + _getRenderWidth(text) <= bufferMaxLength) {
           buffer = buffer.substring(0, index) + text + buffer.substring(index);
           index += text.length;
         }
@@ -185,7 +185,7 @@ class Context {
         write(buffer);
         _console.cursorPosition = dc.Coordinate(
           screenRow,
-          screenColOffset + _getDisplayWidth(buffer.substring(0, index)),
+          screenColOffset + _getRenderWidth(buffer.substring(0, index)),
         );
         _console.showCursor();
       }
@@ -286,9 +286,8 @@ bool _isFullWidthCharacter(String char) {
   return false;
 }
 
-/// Calculates the actual display width of a string in the **terminal**.
-/// (Solves cursor offset issues)
-int _getDisplayWidth(String text) {
+/// Calculates the render width of a string.
+int _getRenderWidth(String text) {
   int width = 0;
   for (final char in text.characters) {
     width += _isFullWidthCharacter(char) ? 2 : 1;
