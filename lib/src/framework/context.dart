@@ -163,18 +163,18 @@ class Context {
             break;
         }
       } else {
-        if (buffer.length < bufferMaxLength) {
-          final prefix = buffer.substring(0, index);
-          final suffix = buffer.substring(index);
-          utf8Buffer.addAll(key.char.codeUnits);
-          try {
-            final text = utf8.decode(utf8Buffer);
-            buffer = prefix + text + suffix;
-            utf8Buffer.clear();
-            index += text.length;
-          } catch (_) {
-            continue;
-          }
+        utf8Buffer.addAll(key.char.codeUnits);
+        final String text;
+        try {
+          text = utf8.decode(utf8Buffer);
+          utf8Buffer.clear();
+        } catch (_) {
+          // invalid UTF-8, wait for more characters
+          continue;
+        }
+        if (_getDisplayWidth(buffer) + _getDisplayWidth(text) <= bufferMaxLength) {
+          buffer = buffer.substring(0, index) + text + buffer.substring(index);
+          index += text.length;
         }
       }
 
